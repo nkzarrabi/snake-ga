@@ -1,11 +1,11 @@
 import pygame
-from random import randint
 from DQN import DQNAgent
 import numpy as np
 from keras.utils import to_categorical
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import secrets
 
 # Set options to activate or deactivate the game view, and its speed
 display_option = False
@@ -100,9 +100,9 @@ class Food(object):
         self.image = pygame.image.load('img/food2.png')
 
     def food_coord(self, game, player):
-        x_rand = randint(20, game.game_width - 40)
+        x_rand = secrets.SystemRandom().randint(20, game.game_width - 40)
         self.x_food = x_rand - x_rand % 20
-        y_rand = randint(20, game.game_height - 40)
+        y_rand = secrets.SystemRandom().randint(20, game.game_height - 40)
         self.y_food = y_rand - y_rand % 20
         if [self.x_food, self.y_food] not in player.position:
             return self.x_food, self.y_food
@@ -195,8 +195,8 @@ def run():
             state_old = agent.get_state(game, player1, food1)
             
             #perform random actions based on agent.epsilon, or choose the action
-            if randint(0, 200) < agent.epsilon:
-                final_move = to_categorical(randint(0, 2), num_classes=3)
+            if secrets.SystemRandom().randint(0, 200) < agent.epsilon:
+                final_move = to_categorical(secrets.SystemRandom().randint(0, 2), num_classes=3)
             else:
                 # predict action based on the old state
                 prediction = agent.model.predict(state_old.reshape((1,11)))

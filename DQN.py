@@ -1,10 +1,10 @@
 from keras.optimizers import Adam
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout
-import random
 import numpy as np
 import pandas as pd
 from operator import add
+import secrets
 
 
 class DQNAgent(object):
@@ -95,7 +95,7 @@ class DQNAgent(object):
 
     def replay_new(self, memory):
         if len(memory) > 1000:
-            minibatch = random.sample(memory, 1000)
+            minibatch = secrets.SystemRandom().sample(memory, 1000)
         else:
             minibatch = memory
         for state, action, reward, next_state, done in minibatch:
